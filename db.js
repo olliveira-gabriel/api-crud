@@ -23,3 +23,23 @@ async function connect() {
   }
 
   connect();
+
+// funçao inserir clientes
+
+async function insertCustomer(customer) {
+
+    const client = await connect()
+
+    const sql = "INSERT INTO client(cpf, nome, idade, profissao)  VALUES(1$, 2$, 3$, 4$,$5);";
+
+    // PARAMETROS INJETADOS NA CONSULTA
+    const values = [customer.cpf, customer.nome, customer.email, customer.idade, customer.profissao];
+
+    await client.query(sql, values);
+
+
+}
+
+  module.exports = {
+    insertCustomer
+  }

@@ -12,6 +12,11 @@ app.use(express.json());
 
 
 // Rota para inserir clientes
+app.post("/client", async (req, res) => {
+    await db.insertCustomer(req.body);
+    
+    res.sendStatus(201);
+})
 
 
 app.listen(port);
