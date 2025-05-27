@@ -30,7 +30,7 @@ async function insertCustomer(customer) {
 
     const client = await connect()
 
-    const sql = "INSERT INTO client(cpf, nome, idade, profissao)  VALUES(1$, 2$, 3$, 4$,$5);";
+    const sql = "INSERT INTO client(cpf, nome, email, idade, profissao) VALUES($1, $2, $3, $4, $5);";
 
     // PARAMETROS INJETADOS NA CONSULTA
     const values = [customer.cpf, customer.nome, customer.email, customer.idade, customer.profissao];
@@ -40,6 +40,19 @@ async function insertCustomer(customer) {
 
 }
 
+// Função para listar clientes
+async function selectCustomers() {
+  // Estabelecer conexão com o banco de dados
+  const client = await connect();
+  // Enviar comando SQL para o banco de dados
+  const res = await client.query("SELECT * FROM client");
+  // Retorna as linhas (registros) da tabela
+  return res.rows;
+  }
+  // Exportando as funções para uso no backend
+
+  
   module.exports = {
-    insertCustomer
+  insertCustomer,
+  selectCustomers
   }
