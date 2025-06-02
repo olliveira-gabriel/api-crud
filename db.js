@@ -58,9 +58,28 @@ async function insertCustomer(customer) {
     await client.query(sql, values);
 
 
-}  
+  }  
+
+  // Função para excluir um cliente
+  async function deleteCustomer(id) {
+    const client = await connect();
+    const sql = "DELETE FROM client WHERE cpf=$1";
+    const values = [id];
+    await client.query(sql, values);
+  }
+
+  async function updateCustomer(cpf, customer) {
+    const client = await connect();
+    const sql = `UPDATE client SET nome = $1, email = $2, idade = $3, profissao = $4 WHERE cpf = $5`;
+    const values = [customer.nome, customer.email, customer.idade, customer.profissao, cpf];
+    await client.query(sql, values);
+  }
+  
+
   module.exports = {
   insertCustomer,
   selectCustomers,
-  selectCustomer
+  selectCustomer,
+  deleteCustomer,
+  updateCustomer
   }
