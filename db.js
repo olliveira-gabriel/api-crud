@@ -36,7 +36,7 @@ async function selectCustomers() {
   return res.rows;
   }
 
-  // Função para listar um cliente
+  // Função para listar UM cliente
 async function selectCustomer(id) {
   // Estabelece a conexão com o banco de dados
   const client = await connect();
@@ -59,7 +59,21 @@ async function insertCustomer(customer) {
 
 
   }  
-
+  
+// Função para editar/atualizar clientes
+async function updateCustomer(id, customer) {
+  // Estabelecer conexão
+  const client = await connect();
+  // query
+  const sql = "UPDATE client SET nome=$1, idade=$2, profissao=$3 WHERE cpf=$4";
+  
+  // parâmetros que devem ser injetados na consulta
+  const values = [customer.nome, customer.idade,
+  customer.profissao, id];
+  
+  await client.query(sql, values);
+  }
+   
   // Função para excluir um cliente
   async function deleteCustomer(id) {
     const client = await connect();
@@ -68,12 +82,6 @@ async function insertCustomer(customer) {
     await client.query(sql, values);
   }
 
-  async function updateCustomer(cpf, customer) {
-    const client = await connect();
-    const sql = `UPDATE client SET nome = $1, email = $2, idade = $3, profissao = $4 WHERE cpf = $5`;
-    const values = [customer.nome, customer.email, customer.idade, customer.profissao, cpf];
-    await client.query(sql, values);
-  }
   
 
   module.exports = {

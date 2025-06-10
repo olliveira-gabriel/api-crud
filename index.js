@@ -34,16 +34,17 @@ app.post("/client", async (req, res) => {
 })
 
 // Rota para excluir cliente
-app.delete("/clientes/:id", async (req, res) => {
+app.delete("/client/:id", async (req, res) => {
     await db.deleteCustomer(req.params.id)
     res.sendStatus(204) 
 })
 
-// Rota para PATCH cliente
-app.patch("/client/:cpf", async (req, res) => {
-    await db.updateCustomer(req.params.cpf, req.body);
-    res.sendStatus(204); 
-});
+// Rota para editar/atualizar cliente
+app.patch("/client/:id", async (req, res) => {
+    await db.updateCustomer(req.params.id, req.body)
+    res.sendStatus(200) // 200 é o código de atualização
+})
+
 
 app.listen(port);
 
